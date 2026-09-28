@@ -2,6 +2,8 @@
 
 Web application for analyzing resumes for ATS compatibility and giving practical feedback before job applications.
 
+Before making product or architecture decisions, read `docs/product/intent.md`. For platform-specific claims, read `docs/research/linkedin-seek-application-ats-standards.md`.
+
 Initial product context:
 - Primary market: New Zealand
 - Priority job platforms: LinkedIn and SEEK
