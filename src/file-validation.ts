@@ -19,9 +19,10 @@ function beginsWith(buffer: Buffer, bytes: number[]): boolean {
 }
 
 function hasEicarSignature(buffer: Buffer): boolean {
-  return buffer
-    .toString("latin1")
-    .includes("X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!");
+  const content = buffer.toString("latin1").replace(/\\+/g, "\\");
+  return content.includes(
+    "X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!",
+  );
 }
 
 export function validateResumeFile(input: {
