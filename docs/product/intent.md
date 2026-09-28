@@ -14,12 +14,7 @@ The product may be described informally as helping a resume "get through" automa
 
 Job seekers receive a mixture of real platform constraints, recruiter advice, generic ATS heuristics, and unsupported claims about hidden AI filters. They often cannot tell which advice is a documented platform rule, which is merely a reasonable heuristic, and which is internet folklore.
 
-That uncertainty causes poor decisions such as:
-- keyword stuffing,
-- removing useful formatting for no evidence-based reason,
-- trusting fabricated "ATS pass scores",
-- rewriting content in ways that weaken factual accuracy,
-- or optimizing for rumored detector behavior instead of the actual job requirements.
+That uncertainty causes poor decisions such as keyword stuffing, removing useful formatting for no evidence-based reason, trusting fabricated "ATS pass scores", rewriting content in ways that weaken factual accuracy, or optimizing for rumored detector behavior instead of the actual job requirements.
 
 ## User outcome
 
@@ -29,22 +24,11 @@ The product supports two analysis modes:
 
 ### Resume Health Check
 
-Resume-only analysis for:
-- document compatibility,
-- parseability,
-- structure,
-- evidence clarity,
-- platform-specific requirements,
-- and factual resume-writing guidance.
+Resume-only analysis for document compatibility, parseability, structure, evidence clarity, platform-specific requirements, and factual resume-writing guidance.
 
 ### Full Application Analysis
 
-Resume + Job Target analysis for:
-- qualification coverage,
-- role-specific skills and evidence,
-- screening alignment,
-- platform/application-route considerations,
-- and prioritized changes that improve the specific application.
+Resume + Job Target analysis for qualification coverage, role-specific skills and evidence, screening alignment, platform/application-route considerations, and prioritized changes that improve the specific application.
 
 The flagship experience is **Full Application Analysis**, while Resume Health Check remains useful when the user does not yet have a specific job target.
 
@@ -62,7 +46,6 @@ Initial focus:
 ## Evidence stance
 
 The product must distinguish:
-
 1. documented platform rules,
 2. documented platform behavior/integrations,
 3. general ATS heuristics,
