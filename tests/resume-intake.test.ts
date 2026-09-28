@@ -344,6 +344,12 @@ test("landing page exposes the privacy disclosure and accessible status channel"
     assert.match(response.body, /No permanent candidate account is required/);
     assert.match(response.body, /role="status"/);
     assert.match(response.body, /for="resume-file"/);
+    assert.match(response.body, /href="\/privacy"/);
+
+    const privacy = await app.inject({ method: "GET", url: "/privacy" });
+    assert.equal(privacy.statusCode, 200);
+    assert.match(privacy.body, /Raw CV \/ resume upload/);
+    assert.match(privacy.body, /AI-assisted analysis/);
   } finally {
     await app.close();
     await rm(tempRoot, { recursive: true, force: true });
