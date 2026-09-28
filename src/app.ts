@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import Fastify, { type FastifyInstance } from "fastify";
+import Fastify, { type FastifyInstance, type FastifyReply } from "fastify";
 import { loadConfig, type AppConfig } from "./config.js";
 import { CandidateFacingError } from "./errors.js";
 import { ProductionResumeTextExtractor, type ResumeTextExtractor } from "./resume-parser.js";
@@ -190,7 +190,7 @@ export function buildApp(options: BuildAppOptions = {}): FastifyInstance {
   );
 
   const sendAsset = async (
-    reply: Parameters<Parameters<FastifyInstance["get"]>[1]>[1],
+    reply: FastifyReply,
     fileName: string,
     contentType: string,
   ) => {
