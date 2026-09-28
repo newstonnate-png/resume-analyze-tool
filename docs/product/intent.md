@@ -1,40 +1,63 @@
 # Product Intent
 
 **Status:** Working product intent  
-**Established:** 2026-09-28
+**Established:** 2026-09-28  
+**Last refined:** 2026-09-28
 
 ## Product
 
-**Resume Analyze Tool** is a web application for New Zealand job seekers who want to assess and improve a resume before applying through LinkedIn, SEEK, or an employer's downstream application system.
+**Resume Analyze Tool** is a web application for New Zealand job seekers who want to improve the likelihood that their resume is successfully parsed, understood, and matched by automated application systems and recruiter workflows used around LinkedIn, SEEK, and downstream employer ATS/recruitment software.
+
+The product may be described informally as helping a resume "get through" automated screening. In product and engineering terms, that means **improving legitimate machine readability, qualification alignment, screening compatibility, and recruiter-facing clarity**. It does not mean hiding AI-generated content from anti-fraud or platform detection systems, bypassing access controls, or defeating platform safeguards.
 
 ## Problem
 
 Job seekers receive a mixture of real platform constraints, recruiter advice, generic ATS heuristics, and unsupported claims about hidden AI filters. They often cannot tell which advice is a documented platform rule, which is merely a reasonable heuristic, and which is internet folklore.
 
-That uncertainty encourages bad behavior such as keyword stuffing, unnecessary formatting changes, or believing a fabricated "ATS pass score".
+That uncertainty causes poor decisions such as:
+- keyword stuffing,
+- removing useful formatting for no evidence-based reason,
+- trusting fabricated "ATS pass scores",
+- rewriting content in ways that weaken factual accuracy,
+- or optimizing for rumored detector behavior instead of the actual job requirements.
 
 ## User outcome
 
-A user should be able to upload a resume, optionally provide a target job, select the application platform, and receive an explainable analysis showing:
+A user should be able to upload a resume and receive accurate, factual feedback about what should change.
 
-- whether the document meets known platform constraints,
-- whether the resume can be reliably parsed by our system,
-- how well the candidate's stated evidence covers the target role's qualifications,
-- what relevant evidence appears missing or weak,
-- what changes would improve clarity and alignment without inventing facts,
-- and which findings are verified platform rules versus general guidance.
+The product supports two analysis modes:
+
+### Resume Health Check
+
+Resume-only analysis for:
+- document compatibility,
+- parseability,
+- structure,
+- evidence clarity,
+- platform-specific requirements,
+- and factual resume-writing guidance.
+
+### Full Application Analysis
+
+Resume + Job Target analysis for:
+- qualification coverage,
+- role-specific skills and evidence,
+- screening alignment,
+- platform/application-route considerations,
+- and prioritized changes that improve the specific application.
+
+The flagship experience is **Full Application Analysis**, while Resume Health Check remains useful when the user does not yet have a specific job target.
 
 ## Primary users
 
 Initial focus:
-
 - job seekers applying in New Zealand,
 - especially people applying through LinkedIn and SEEK,
 - including applications that ultimately flow into an employer's external ATS or recruitment platform.
 
 ## Core promise
 
-> Help candidates produce a truthful, machine-readable, role-aligned resume using evidence-backed platform guidance, without pretending to know a proprietary employer's hidden ranking algorithm.
+> Help candidates produce a truthful, machine-readable, role-aligned resume that performs well in legitimate automated screening and recruiter workflows, using evidence-backed platform guidance and transparent analysis.
 
 ## Evidence stance
 
@@ -48,17 +71,21 @@ The product must distinguish:
 
 A recommendation should be traceable to one of these evidence classes.
 
-## Ethical stance
+Platform-specific facts must come from the **Evidence Registry**, not from model memory alone.
 
-The product optimizes for compatibility, clarity, and truthful representation.
+## Ethical and product integrity stance
+
+The product optimizes for compatibility, clarity, truthful representation, and successful legitimate screening.
 
 It does **not**:
 - invent qualifications or work history,
 - encourage deceptive keyword stuffing,
-- claim to bypass AI or recruiter controls,
+- hide AI-generated content from anti-fraud or platform detection safeguards,
+- circumvent platform access controls,
 - automate application spam,
 - impersonate a recruiter,
-- guarantee an interview or ATS outcome.
+- guarantee an interview or ATS outcome,
+- represent our own diagnostic scores as hidden LinkedIn, SEEK, or employer scores.
 
 ## Product hypotheses
 
@@ -66,6 +93,7 @@ It does **not**:
 2. Separating platform rules from heuristics will make recommendations more trustworthy.
 3. Showing the evidence behind a finding will help users decide which edits to accept.
 4. Parseability diagnostics plus role alignment provide a useful approximation of application readiness without pretending to reproduce a proprietary ATS.
+5. Automation should remove repetitive candidate work without relying on unauthorized scraping of LinkedIn or SEEK.
 
 These are hypotheses, not established user-research findings.
 
@@ -74,46 +102,86 @@ These are hypotheses, not established user-research findings.
 Candidate-level:
 - users can understand why each major recommendation exists,
 - users can identify missing evidence versus wording problems,
-- users can produce a revised resume without introducing false claims.
+- users can produce a revised resume without introducing false claims,
+- users can move from job discovery to analysis with minimal manual copying.
 
 Product-level:
 - high extraction success across supported documents,
 - low rate of unsupported platform-specific claims,
 - recommendations remain consistent when the same resume/job input is re-run,
-- platform rules can be updated independently when LinkedIn or SEEK documentation changes.
+- platform rules can be updated independently when LinkedIn or SEEK documentation changes,
+- automated job ingestion does not depend on prohibited scraping or access-control circumvention.
 
-## Non-goals for the first product
+## Product architecture decisions already made
 
-- automatic job submission,
-- browser automation against LinkedIn or SEEK,
-- reverse-engineering proprietary ranking algorithms,
-- promising an interview probability,
-- a universal score presented as an employer or platform score,
-- replacing human career advice for nuanced career decisions.
+- **Thin web frontend + backend API.**
+- **Hybrid analysis pipeline:** file validation → deterministic extraction → structural checks → evidence/rules engine → semantic job matching → recommendation generation.
+- **PDF + DOCX are first-class analysis formats for MVP.**
+- **Legacy platform-supported formats** such as DOC, RTF, and TXT can be recognized and explained before full parsing support is added.
+- **Evidence Registry is a first-class module** and must support automated freshness/update workflows with human-verifiable provenance.
+- **Separate analysis dimensions** rather than a fabricated universal ATS pass probability.
+- **Anonymous candidate use by default for MVP**, with ephemeral processing; client/operator administration is a separate authenticated concern.
+
+## Scoring stance
+
+The product may expose separate, explainable dimensions such as:
+- Document Compatibility
+- Parseability
+- Qualification Coverage
+- Screening Alignment
+
+A later **Application Readiness** summary may combine these, but it must be presented as our own diagnostic model, never as a LinkedIn/SEEK/employer pass probability.
+
+## Job ingestion stance
+
+Manual copy/paste must not be the primary experience.
+
+However, automation must not depend on unauthorized scraping or automated copying of LinkedIn/SEEK pages.
+
+The architecture should support multiple compliant ingestion channels, for example:
+- official platform/partner APIs where approved,
+- user-supplied job files, exported pages, screenshots, or documents that can be parsed automatically,
+- structured import from supported third-party sources,
+- URL ingestion only where the source permits automated retrieval,
+- paste as a fallback rather than the flagship workflow.
+
+The exact ingestion strategy remains an architecture decision.
+
+## Privacy stance
+
+Candidate resumes contain sensitive personal information.
+
+For MVP:
+- no candidate account is required,
+- uploads are processed ephemerally by default,
+- source files should be deleted after analysis according to a defined retention policy,
+- a short-lived anonymous session may connect the upload to its report,
+- client/admin authentication is separate from candidate authentication.
+
+Candidate accounts can be added later for explicitly requested persistence such as saved resumes, saved reports, job history, and cross-device continuity.
 
 ## Current constraints
 
 - Initial platform focus is LinkedIn and SEEK New Zealand.
-- Platform behavior can change, so first-party evidence must be versioned or periodically reviewed.
+- Platform behavior can change, so first-party evidence must be versioned and periodically reviewed.
 - External ATS behavior varies by employer and vendor.
 - Resume content is sensitive personal information, so architecture must minimize retention and unnecessary exposure.
 - AI-generated edits must preserve candidate truth and expose uncertainty.
+- LinkedIn and SEEK automation must respect their access and data-use restrictions.
 
 ## Pending architecture decisions
 
-- application architecture and deployment model,
-- resume file-processing pipeline,
-- supported source formats at launch,
-- parser strategy and fallback behavior,
-- whether analysis is deterministic, LLM-assisted, or hybrid,
-- job-description ingestion,
-- rule/evidence storage and versioning,
-- scoring model and whether an overall score should exist at all,
-- privacy/retention model,
-- authentication and account requirement,
-- persistence of resumes, reports, and job targets,
-- observability and auditability for AI recommendations.
+- deployment/provider model,
+- resume parser implementation and fallbacks,
+- compliant automated Job Target ingestion,
+- model/provider strategy and fallback behavior,
+- Evidence Registry storage, validation, update cadence, and human review,
+- exact data-retention durations,
+- report persistence and export,
+- client/admin authentication and tenancy,
+- observability and auditability for AI recommendations,
+- abuse/rate limiting and cost controls.
 
 ## Next design question
 
-Define the system architecture around the product's evidence model and privacy boundary before designing the detailed UI.
+Define the system boundaries around Job Target ingestion, the Evidence Registry, AI/provider execution, privacy/retention, and client administration before designing the detailed UI.
