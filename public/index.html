@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en-NZ">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Upload a CV or resume for evidence-backed application analysis."
+    />
+    <title>Resume Analyze Tool</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Resume Analyze Tool home">
+        Resume Analyze Tool
+      </a>
+      <a class="header-link" href="#privacy">Privacy</a>
+    </header>
+
+    <main class="shell">
+      <section class="hero" aria-labelledby="page-title">
+        <p class="eyebrow">NZ job application preparation</p>
+        <h1 id="page-title">Make your CV easier to understand.</h1>
+        <p class="lede">
+          Start with a private CV upload. You do not need an account.
+        </p>
+      </section>
+
+      <section class="card" aria-labelledby="upload-title">
+        <div class="section-heading">
+          <div>
+            <p class="step">Step 1</p>
+            <h2 id="upload-title">Upload your CV / resume</h2>
+          </div>
+          <span class="pill">PDF or DOCX</span>
+        </div>
+
+        <div id="privacy" class="privacy-note">
+          <strong>Before you upload:</strong>
+          <span>
+            your original file is processed temporarily and deleted after
+            extraction. Later AI-assisted analysis may process extracted
+            content. No permanent candidate account is required.
+          </span>
+        </div>
+
+        <form id="upload-form" novalidate>
+          <label class="file-picker" for="resume-file">
+            <span class="file-picker-title">Choose a PDF or DOCX</span>
+            <span class="file-picker-help">
+              Up to the configured upload limit. Drag and drop is optional;
+              this button always works by keyboard.
+            </span>
+            <input
+              id="resume-file"
+              name="resume"
+              type="file"
+              accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              required
+            />
+          </label>
+
+          <p id="selected-file" class="selected-file" aria-live="polite"></p>
+
+          <div class="actions">
+            <button id="upload-button" class="primary" type="submit">
+              Read my CV
+            </button>
+            <button
+              id="cancel-button"
+              class="secondary"
+              type="button"
+              hidden
+            >
+              Cancel upload
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <section
+        id="progress-card"
+        class="card"
+        aria-labelledby="progress-title"
+        hidden
+      >
+        <p class="step">Processing</p>
+        <h2 id="progress-title">Reading your CV</h2>
+        <ol class="progress-list">
+          <li id="progress-received">File received</li>
+          <li id="progress-reading">Reading sections and work history</li>
+          <li id="progress-structure">Checking structure</li>
+        </ol>
+      </section>
+
+      <section
+        id="clarification-card"
+        class="card"
+        aria-labelledby="clarification-title"
+        hidden
+      >
+        <p class="step">Quick check</p>
+        <h2 id="clarification-title">We need one detail from you</h2>
+        <div id="clarification-list"></div>
+      </section>
+
+      <section
+        id="ready-card"
+        class="card success-card"
+        aria-labelledby="ready-title"
+        hidden
+      >
+        <p class="step">Ready</p>
+        <h2 id="ready-title">Your CV is ready for analysis.</h2>
+        <p>
+          We created a structured Resume for this private session. Your
+          original upload has been deleted.
+        </p>
+        <dl class="summary-grid">
+          <div>
+            <dt>Extraction confidence</dt>
+            <dd id="confidence-value">—</dd>
+          </div>
+          <div>
+            <dt>Skills detected</dt>
+            <dd id="skills-count">—</dd>
+          </div>
+          <div>
+            <dt>Work entries detected</dt>
+            <dd id="work-count">—</dd>
+          </div>
+        </dl>
+        <p class="next-note">
+          Resume Health Check and job-specific analysis arrive in the next
+          implementation slices.
+        </p>
+      </section>
+
+      <section id="error-card" class="card error-card" hidden>
+        <h2>We could not complete this step</h2>
+        <p id="error-message" role="alert"></p>
+        <p id="error-safe-state" class="muted"></p>
+        <div id="error-actions" class="error-actions"></div>
+      </section>
+
+      <div
+        id="status-region"
+        class="sr-status"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      ></div>
+    </main>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
