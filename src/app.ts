@@ -204,6 +204,9 @@ export function buildApp(options: BuildAppOptions = {}): FastifyInstance {
   app.get("/", async (_request, reply) =>
     sendAsset(reply, "index.html", "text/html; charset=utf-8"),
   );
+  app.get("/privacy", async (_request, reply) =>
+    sendAsset(reply, "privacy.html", "text/html; charset=utf-8"),
+  );
   app.get("/app.js", async (_request, reply) =>
     sendAsset(reply, "app.js", "application/javascript; charset=utf-8"),
   );
