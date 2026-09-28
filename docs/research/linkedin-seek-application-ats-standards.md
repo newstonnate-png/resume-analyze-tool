@@ -282,3 +282,45 @@ The following are intentionally **not established** by this research:
 - reliable interview probability from resume text alone
 
 Those require either additional vendor-specific research or empirical testing and must never be presented as verified LinkedIn/SEEK standards without evidence.
+
+
+---
+
+# Automated job-ingestion constraints
+
+## LinkedIn
+
+LinkedIn's current User Agreement prohibits using software, scripts, robots, crawlers, browser plugins/add-ons, or other technology to scrape or copy the Services, and prohibits bypassing access controls or use limits.
+
+LinkedIn does provide Talent/Job Posting APIs, but access to most Talent products requires explicit authorization or partner access. The documented Job Posting API is primarily for ATS/partner systems to publish and manage jobs on LinkedIn; it is not a general anonymous candidate-side API for retrieving arbitrary job pages.
+
+**Architecture consequence:** do not make server-side LinkedIn scraping, DOM extraction extensions, or access-control workarounds a core Job Target ingestion mechanism. Treat official approved integration as a future channel, not an MVP assumption.
+
+Sources:
+- LinkedIn User Agreement: https://www.linkedin.com/legal/user-agreement
+- LinkedIn API access overview: https://learn.microsoft.com/en-us/linkedin/shared/authentication/getting-access
+- LinkedIn Job Posting API overview: https://learn.microsoft.com/en-us/linkedin/talent/job-postings/api/sync-job-postings
+
+## SEEK
+
+SEEK's API requires approval and is documented primarily for recruitment-software providers integrating with hirers. SEEK's published terms also restrict data mining, robots, screen scraping, and similar automated extraction without prior written approval.
+
+**Architecture consequence:** do not base candidate-side Job Target ingestion on scraping SEEK job pages. Official SEEK integration is a possible future partner path, but not an assumed MVP dependency.
+
+Sources:
+- SEEK Developer: https://developer.seek.com/
+- SEEK Developer Introduction: https://developer.seek.com/introduction
+- SEEK API Terms: https://www.seek.com.au/content/terms/new-api-terms-seek-au.pdf
+
+## Product implication
+
+The desired UX remains highly automated, but automation should happen **after the candidate provides the job content through a permitted channel**.
+
+Potential compliant channels to evaluate:
+- official partner/API integration,
+- user-uploaded job ad PDF/image/screenshot with automatic extraction,
+- structured browser share/export where the platform explicitly permits it,
+- importing from an employer careers page or other source whose terms permit automated retrieval,
+- pasted text as a fallback.
+
+The MVP should not promise "paste any LinkedIn/SEEK URL and we will scrape it" unless a permitted retrieval path is established.
