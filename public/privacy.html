@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en-NZ">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy · Resume Analyze Tool</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/">Resume Analyze Tool</a>
+      <a class="header-link" href="/">Back to upload</a>
+    </header>
+
+    <main class="shell">
+      <article class="card" aria-labelledby="privacy-title">
+        <p class="eyebrow">Data handling</p>
+        <h1 id="privacy-title">How this private session handles your CV</h1>
+
+        <h2>Raw CV / resume upload</h2>
+        <p>
+          Your original PDF or DOCX is used only long enough to validate and
+          extract the information needed for this private session. A successful
+          intake is not reported until the temporary raw upload has been
+          deleted.
+        </p>
+
+        <h2>Normalized Resume</h2>
+        <p>
+          The extracted structured Resume is kept only in the anonymous
+          session so later analysis steps can work without retaining the
+          original file. Session retention is intentionally temporary and is
+          governed by the product's configured privacy lifecycle.
+        </p>
+
+        <h2>AI-assisted analysis</h2>
+        <p>
+          Later product stages may send extracted content to an approved
+          AI-assisted analysis provider. Candidate content must not be sent to
+          an unapproved third-party provider, and provider retention settings
+          must satisfy the production privacy requirements before release.
+        </p>
+
+        <h2>Logs and analytics</h2>
+        <p>
+          Ordinary application logs and analytics use operational metadata
+          such as anonymous session identifiers and error categories. They are
+          not intended to contain your CV text, contact details, or proposed
+          Resume wording.
+        </p>
+
+        <h2>Accounts</h2>
+        <p>
+          No permanent candidate account is required for the MVP. If the
+          anonymous session expires, deleted personal content is not
+          recoverable through the product.
+        </p>
+      </article>
+    </main>
+  </body>
+</html>
