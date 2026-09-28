@@ -1,0 +1,3 @@
+# Keep the web frontend thin and own analysis in a backend API
+
+The product will use a thin web frontend with a backend-owned hybrid analysis pipeline: file validation → deterministic extraction → structural checks → Evidence Registry/rules evaluation → semantic Job Target matching → recommendation generation. This keeps sensitive file handling, model/provider credentials, evidence versioning, scoring logic, and consistency controls out of the browser while still allowing an accountless candidate experience. The rejected alternative is a browser-only architecture, which would make provider secrets, document processing consistency, evidence updates, and later operational controls substantially harder to manage.
